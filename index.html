@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pages</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 40px 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; font-weight: 600; margin-bottom: 30px; color: #fff; }
+.page-list { list-style: none; }
+.page-item { padding: 16px 20px; border-bottom: 1px solid #1a1a1a; transition: background 0.2s; }
+.page-item:hover { background: #111; }
+.page-item a { color: #4dabf7; text-decoration: none; font-size: 1.05em; }
+.page-item a:hover { text-decoration: underline; }
+.page-item .date { color: #666; font-size: 0.85em; margin-left: 10px; }
+.empty { color: #555; font-style: italic; }
+</style>
+</head>
+<body>
+<h1>Published Pages</h1>
+<ul class="page-list" id="pages"></ul>
+<script>
+// pages.json will be maintained by deploy script
+fetch('pages.json').then(r => r.json()).then(pages => {
+  const ul = document.getElementById('pages');
+  if (!pages.length) { ul.innerHTML = '<li class="empty">No pages yet.</li>'; return; }
+  pages.sort((a, b) => b.date.localeCompare(a.date));
+  pages.forEach(p => {
+    const li = document.createElement('li');
+    li.className = 'page-item';
+    li.innerHTML = `<a href="${p.slug}/">${p.title}</a><span class="date">${p.date}</span>`;
+    ul.appendChild(li);
+  });
+}).catch(() => {
+  document.getElementById('pages').innerHTML = '<li class="empty">No pages yet.</li>';
+});
+</script>
+</body>
+</html>
