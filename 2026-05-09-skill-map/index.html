@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Claude Code 技能地图</title>
+<meta name="author" content="Kinpoe.Ray">
+<meta name="description" content="34 skills across 6 categories — 从认知原子到输出铸造的全链路工具体系">
+<meta name="keywords" content="Claude Code, Skill Map, 技能地图, Kami, 认知原子, 输出铸造">
+<meta name="generator" content="Kami">
+<style>
+  @font-face {
+    font-family: "TsangerJinKai02";
+    src: url("C:/Users/Kinpoe·Ray/.claude/skills/kami/assets/fonts/TsangerJinKai02-W04.ttf") format("truetype"),
+       url("https://cdn.jsdelivr.net/gh/tw93/Kami@main/assets/fonts/TsangerJinKai02-W04.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "TsangerJinKai02";
+    src: url("C:/Users/Kinpoe·Ray/.claude/skills/kami/assets/fonts/TsangerJinKai02-W05.ttf") format("truetype"),
+       url("https://cdn.jsdelivr.net/gh/tw93/Kami@main/assets/fonts/TsangerJinKai02-W05.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @page {
+    size: A4;
+    margin: 13mm 16mm 13mm 16mm;
+    background: #f5f4ed;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment: #f5f4ed;
+    --ivory:     #faf9f5;
+    --sand:      #e8e6dc;
+    --near-black:#141413;
+    --dark-warm: #3d3d3a;
+    --olive:     #504e49;
+    --stone:     #6b6a64;
+    --brand:     #1B365D;
+    --border:    #e8e6dc;
+    --border-soft:#e5e3d8;
+    --tag-bg:    #E4ECF5;
+    --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+    --sans: var(--serif);
+  }
+
+  html, body { background: var(--parchment); }
+  @media screen {
+    body { max-width: 210mm; margin: 0 auto; padding: 13mm 16mm; }
+  }
+
+  body {
+    color: var(--near-black);
+    font-family: var(--serif);
+    font-size: 9pt;
+    line-height: 1.4;
+    letter-spacing: 0.3pt;
+  }
+
+  .header {
+    border-left: 2.5pt solid var(--brand);
+    border-radius: 1.5pt;
+    padding-left: 8pt;
+    margin-bottom: 10pt;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20pt;
+  }
+  .title-block { flex: 1; }
+  .eyebrow {
+    font-size: 8pt;
+    color: var(--brand);
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+    margin-bottom: 3pt;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: 22pt;
+    font-weight: 500;
+    color: var(--near-black);
+    line-height: 1.15;
+    margin-bottom: 4pt;
+  }
+  .subtitle {
+    font-size: 10pt;
+    color: var(--olive);
+    line-height: 1.4;
+  }
+  .meta {
+    font-size: 8pt;
+    color: var(--stone);
+    text-align: right;
+    line-height: 1.45;
+    white-space: nowrap;
+  }
+
+  .metrics {
+    display: flex;
+    gap: 12pt;
+    margin-bottom: 12pt;
+    padding: 3pt 0 5pt 0;
+    border-bottom: 0.3pt dotted var(--border);
+  }
+  .metric {
+    flex: 1;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 4pt;
+    break-inside: avoid;
+  }
+  .metric-value {
+    font-family: var(--serif);
+    font-size: 20pt;
+    font-weight: 500;
+    color: var(--brand);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    letter-spacing: -0.2pt;
+  }
+  .metric-label {
+    font-size: 8pt;
+    color: var(--olive);
+    line-height: 1.3;
+  }
+
+  .lead {
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: var(--dark-warm);
+    margin-bottom: 10pt;
+  }
+
+  .hl { color: var(--brand); font-weight: 500; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14pt;
+  }
+
+  .cat-title {
+    font-size: 11pt;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 4pt;
+    padding-bottom: 2pt;
+    border-bottom: 0.5pt solid var(--brand);
+    display: flex;
+    align-items: baseline;
+    gap: 5pt;
+  }
+  .cat-icon {
+    color: var(--brand);
+    font-size: 10pt;
+  }
+  .cat-count {
+    font-size: 8pt;
+    font-weight: 400;
+    color: var(--stone);
+    margin-left: 2pt;
+  }
+
+  section { margin-bottom: 10pt; break-inside: avoid; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+    margin: 4pt 0 0 0;
+    break-inside: avoid;
+  }
+  table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--dark-warm);
+    padding: 2pt 4pt;
+    border-bottom: 0.5pt solid var(--border);
+    background: transparent;
+    font-size: 7.5pt;
+  }
+  table td {
+    padding: 1.5pt 4pt;
+    border-bottom: 0.3pt solid var(--border-soft);
+    vertical-align: top;
+    line-height: 1.35;
+  }
+  table td:first-child { white-space: nowrap; }
+  .sk-name { color: var(--near-black); font-weight: 500; }
+  .sk-ver { color: var(--brand); font-size: 7pt; }
+  .sk-inv { color: var(--brand); font-size: 7.5pt; margin-left: 1pt; }
+  .sk-desc { color: var(--olive); }
+
+  .callout {
+    background: transparent;
+    border-left: 1.8pt solid var(--brand);
+    padding: 3pt 0 3pt 12pt;
+    margin: 8pt 0;
+    font-size: 9pt;
+    line-height: 1.5;
+    color: var(--olive);
+    break-inside: avoid;
+  }
+  .callout .hl { color: var(--brand); }
+
+  .footer {
+    margin-top: 10pt;
+    padding-top: 4pt;
+    border-top: 0.3pt dotted var(--border);
+    font-size: 8pt;
+    color: var(--stone);
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 0.3pt;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="title-block">
+    <div class="eyebrow">工具体系</div>
+    <h1>Skill Map</h1>
+    <div class="subtitle">34 skills across 6 categories — 从认知原子到输出铸造的全链路</div>
+  </div>
+  <div class="meta">
+    Kinpoe.Ray<br>
+    2026.05.09<br>
+    v1.0
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="metric">
+    <div class="metric-value">34</div>
+    <div class="metric-label">技能总数</div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">15</div>
+    <div class="metric-label">可调用 /command</div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">6</div>
+    <div class="metric-label">分类</div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">8</div>
+    <div class="metric-label">文档类型</div>
+  </div>
+</div>
+
+<p class="lead">
+  三层架构：<span class="hl">认知原子</span> 拆解概念、生成观点；<span class="hl">输出铸造</span> 将内容落为 PDF/PNG/PPTX；<span class="hl">组合流</span> 串联原子操作形成完整工作流。所有 skill 基于 Claude Code harness 运行，/command 即触即用。
+</p>
+
+<div class="two-col">
+
+  <!-- LEFT COLUMN -->
+  <div>
+    <section>
+      <div class="cat-title"><span class="cat-icon">&#9670;</span> 认知原子<span class="cat-count">7</span></div>
+      <table>
+        <tr><th>Skill</th><th>描述</th></tr>
+        <tr><td><span class="sk-name">ljg-plain</span><span class="sk-ver">v5.0</span><span class="sk-inv">/</span></td><td class="sk-desc">白 — 重述让 12 岁也能懂</td></tr>
+        <tr><td><span class="sk-name">ljg-word</span><span class="sk-ver">v1.0</span><span class="sk-inv">/</span></td><td class="sk-desc">英文单词深度拆解</td></tr>
+        <tr><td><span class="sk-name">ljg-writes</span><span class="sk-ver">v6.0</span><span class="sk-inv">/</span></td><td class="sk-desc">写作引擎，剖开一个观点</td></tr>
+        <tr><td><span class="sk-name">ljg-paper</span><span class="sk-ver">v4.4</span><span class="sk-inv">/</span></td><td class="sk-desc">论文阅读器（非学术向）</td></tr>
+        <tr><td><span class="sk-name">ljg-learn</span></td><td class="sk-desc">深度领域研究</td></tr>
+        <tr><td><span class="sk-name">ljg-think</span><span class="sk-inv">/</span></td><td class="sk-desc">追本之箭，纵向深钻</td></tr>
+        <tr><td><span class="sk-name">ljg-rank</span><span class="sk-inv">/</span></td><td class="sk-desc">找出撑起领域的独立力</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <div class="cat-title"><span class="cat-icon">&#9670;</span> 组合流<span class="cat-count">5</span></div>
+      <table>
+        <tr><th>Skill</th><th>描述</th></tr>
+        <tr><td><span class="sk-name">ljg-paper-flow</span><span class="sk-ver">v1.0</span><span class="sk-inv">/</span></td><td class="sk-desc">论文阅读 + 铸卡片一条龙</td></tr>
+        <tr><td><span class="sk-name">ljg-paper-river</span><span class="sk-ver">v1.0</span><span class="sk-inv">/</span></td><td class="sk-desc">论文倒读法，递归追溯</td></tr>
+        <tr><td><span class="sk-name">ljg-word-flow</span><span class="sk-ver">v1.0</span><span class="sk-inv">/</span></td><td class="sk-desc">单词分析 + 信息图卡片</td></tr>
+        <tr><td><span class="sk-name">ljg-read</span><span class="sk-ver">v1.0</span><span class="sk-inv">/</span></td><td class="sk-desc">阅读伴侣，逐段翻译交互</td></tr>
+        <tr><td><span class="sk-name">ljg-invest</span></td><td class="sk-desc">投资分析，秩序创造机器</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <div class="cat-title"><span class="cat-icon">&#9733;</span> 人文探索<span class="cat-count">3</span></div>
+      <table>
+        <tr><th>Skill</th><th>描述</th></tr>
+        <tr><td><span class="sk-name">ljg-relationship</span></td><td class="sk-desc">关系分析 — 结构诊断 + 精神分析</td></tr>
+        <tr><td><span class="sk-name">ljg-roundtable</span></td><td class="sk-desc">结构化圆桌讨论</td></tr>
+        <tr><td><span class="sk-name">ljg-travel</span><span class="sk-ver">v1.0</span><span class="sk-inv">/</span></td><td class="sk-desc">博物馆/古建筑深度旅行研究</td></tr>
+      </table>
+    </section>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+    <section>
+      <div class="cat-title"><span class="cat-icon">&#9650;</span> 输出铸造<span class="cat-count">8</span></div>
+      <table>
+        <tr><th>Skill</th><th>描述</th></tr>
+        <tr><td><span class="sk-name">ljg-card</span><span class="sk-ver">v1.8</span><span class="sk-inv">/</span></td><td class="sk-desc">铸 — 内容转 PNG（7 种模具）</td></tr>
+        <tr><td><span class="sk-name">kami</span></td><td class="sk-desc">排版引擎 — 简历/报告/白皮书</td></tr>
+        <tr><td><span class="sk-name">notion2wechat</span><span class="sk-ver">v3.0</span><span class="sk-inv">/</span></td><td class="sk-desc">Notion → 微信公众号草稿</td></tr>
+        <tr><td><span class="sk-name">wechat-cover</span><span class="sk-ver">v2.0</span></td><td class="sk-desc">公众号封面图生成器</td></tr>
+        <tr><td><span class="sk-name">magazine-web-ppt</span></td><td class="sk-desc">电子杂志风格翻页网页 PPT</td></tr>
+        <tr><td><span class="sk-name">frontend-slides</span></td><td class="sk-desc">动画丰富的 HTML 演示文稿</td></tr>
+        <tr><td><span class="sk-name">gh-pages</span></td><td class="sk-desc">单 HTML 部署 GitHub Pages</td></tr>
+        <tr><td><span class="sk-name">diagram-design</span></td><td class="sk-desc">技术架构/流程图/时序图</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <div class="cat-title"><span class="cat-icon">&#9679;</span> 联网触达<span class="cat-count">1</span></div>
+      <table>
+        <tr><th>Skill</th><th>描述</th></tr>
+        <tr><td><span class="sk-name">xhs-batch</span></td><td class="sk-desc">小红书笔记批量保存到 Notion</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <div class="cat-title"><span class="cat-icon">&#9632;</span> 系统运维<span class="cat-count">10</span></div>
+      <table>
+        <tr><th>Skill</th><th>描述</th></tr>
+        <tr><td><span class="sk-name">check</span></td><td class="sk-desc">实现完成后代码审查</td></tr>
+        <tr><td><span class="sk-name">hunt</span></td><td class="sk-desc">调试排错，找根因再修</td></tr>
+        <tr><td><span class="sk-name">health</span></td><td class="sk-desc">Agent 健康审计</td></tr>
+        <tr><td><span class="sk-name">think</span></td><td class="sk-desc">写代码前设计/架构决策</td></tr>
+        <tr><td><span class="sk-name">write</span></td><td class="sk-desc">中英文写作润色</td></tr>
+        <tr><td><span class="sk-name">read</span></td><td class="sk-desc">URL/PDF 内容读取分析</td></tr>
+        <tr><td><span class="sk-name">design</span></td><td class="sk-desc">UI/组件/页面视觉设计</td></tr>
+        <tr><td><span class="sk-name">multica</span></td><td class="sk-desc">Multica 平台 CLI 管理</td></tr>
+        <tr><td><span class="sk-name">skill-creator</span></td><td class="sk-desc">创建/修改/测量 skill</td></tr>
+        <tr><td><span class="sk-name">ljg-skill-map</span><span class="sk-ver">v1.0</span><span class="sk-inv">/</span></td><td class="sk-desc">技能地图查看器</td></tr>
+      </table>
+    </section>
+  </div>
+
+</div>
+
+<div class="callout">
+  设计原则：<span class="hl">curation is cheaper than a retrieval miss</span>。认知原子做拆解，组合流串流程，输出铸造落交付物。每个 skill 只做一件事，组合产生复数价值。<span class="hl">/</span> 标记 = 可通过 /command 直接调用，其余由 harness 按触发条件自动调度。
+</div>
+
+<div class="footer">
+  <span>内部参考</span>
+  <span>Claude Code harness · ~/.claude/skills/</span>
+</div>
+
+</body>
+</html>
