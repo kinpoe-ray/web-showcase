@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Notion CLI (ntn) 能力全览</title>
+<meta name="author" content="Kinpoe.Ray">
+<meta name="description" content="Notion 官方 CLI 工具 ntn 的完整命令速查卡，涵盖认证、页面、数据库、API 代理、文件上传、Workers 管理及 MCP 对比。">
+<meta name="keywords" content="Notion, CLI, ntn, 命令行, API, Workers, 速查卡">
+<meta name="generator" content="Kami">
+<style>
+  @font-face {
+    font-family: "TsangerJinKai02";
+    src: url("https://cdn.jsdelivr.net/gh/tw93/Kami@main/assets/fonts/TsangerJinKai02-W04.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "TsangerJinKai02";
+    src: url("https://cdn.jsdelivr.net/gh/tw93/Kami@main/assets/fonts/TsangerJinKai02-W05.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @page { size: A4; margin: 12mm 14mm 10mm 14mm; background: #f5f4ed; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment: #f5f4ed;
+    --ivory:     #faf9f5;
+    --near-black:#141413;
+    --dark-warm: #3d3d3a;
+    --olive:     #504e49;
+    --stone:     #6b6a64;
+    --brand:     #1B365D;
+    --border:    #e8e6dc;
+    --border-soft:#e5e3d8;
+    --tag-bg:    #E4ECF5;
+    --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+    --mono: "SF Mono", "Cascadia Code", "Fira Code", Menlo, Consolas, monospace;
+  }
+
+  html, body { background: var(--parchment); }
+  @media screen { body { max-width: 210mm; margin: 0 auto; padding: 12mm 14mm; } }
+
+  body {
+    color: var(--near-black);
+    font-family: var(--serif);
+    font-size: 9pt;
+    line-height: 1.4;
+    letter-spacing: 0.2pt;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    border-left: 2.5pt solid var(--brand);
+    padding-left: 8pt;
+    margin-bottom: 10pt;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .title-block { flex: 1; }
+  .eyebrow { font-size: 8pt; color: var(--brand); letter-spacing: 1pt; margin-bottom: 2pt; }
+  h1 { font-size: 20pt; font-weight: 500; line-height: 1.15; margin-bottom: 3pt; }
+  .subtitle { font-size: 9.5pt; color: var(--olive); line-height: 1.35; }
+  .meta { font-size: 8pt; color: var(--stone); text-align: right; line-height: 1.4; white-space: nowrap; }
+
+  /* ===== LEAD ===== */
+  .lead {
+    font-size: 9.5pt; line-height: 1.45; color: var(--dark-warm);
+    margin-bottom: 8pt; padding-bottom: 6pt; border-bottom: 0.3pt dotted var(--border);
+  }
+  .hl { color: var(--brand); font-weight: 500; }
+  code {
+    font-family: var(--mono); font-size: 8pt;
+    background: var(--ivory); padding: 0.5pt 3pt; border-radius: 2pt;
+    color: var(--brand); white-space: nowrap;
+  }
+
+  /* ===== GRID ===== */
+  .cmd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6pt 14pt;
+    margin-bottom: 8pt;
+  }
+  .cmd-section { break-inside: avoid; }
+  .cmd-section h3 {
+    font-size: 10pt; font-weight: 500; color: var(--near-black);
+    margin-bottom: 3pt; padding-bottom: 2pt;
+    border-bottom: 0.5pt solid var(--border);
+  }
+  .cmd-section h3 code { font-size: 9pt; }
+
+  /* ===== CMD LIST ===== */
+  .cmd-list { list-style: none; padding: 0; }
+  .cmd-list li {
+    padding: 1pt 0 1pt 10pt; position: relative;
+    font-size: 8.5pt; line-height: 1.4;
+  }
+  .cmd-list li::before {
+    content: "›"; position: absolute; left: 0; color: var(--brand);
+    font-weight: 500; font-size: 9pt;
+  }
+  .cmd-list li code:first-child {
+    background: transparent; padding: 0; font-weight: 500; color: var(--dark-warm);
+  }
+
+  /* ===== TABLE ===== */
+  table {
+    width: 100%; border-collapse: collapse; font-size: 8.5pt; margin: 4pt 0;
+  }
+  th {
+    text-align: left; font-weight: 500; color: var(--dark-warm);
+    padding: 3pt 5pt; border-bottom: 0.8pt solid var(--brand);
+    background: transparent; font-size: 8pt;
+  }
+  td {
+    padding: 2pt 5pt; border-bottom: 0.3pt solid var(--border-soft); vertical-align: top;
+  }
+  .check { color: var(--brand); font-weight: 500; }
+  .cross { color: var(--stone); }
+
+  /* ===== BOTTOM ROW ===== */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6pt 14pt;
+    margin-top: 6pt;
+  }
+  .bottom-section { break-inside: avoid; }
+  .bottom-section h3 {
+    font-size: 10pt; font-weight: 500; color: var(--near-black);
+    margin-bottom: 3pt; padding-bottom: 2pt;
+    border-bottom: 0.5pt solid var(--border);
+  }
+
+  /* ===== ENV LIST ===== */
+  .env-list { list-style: none; padding: 0; }
+  .env-list li { font-size: 8pt; line-height: 1.45; margin-bottom: 1pt; }
+  .env-list li code { font-size: 7.5pt; }
+
+  /* ===== SCENARIO LIST ===== */
+  .scene-list { list-style: none; padding: 0; counter-reset: scene; }
+  .scene-list li {
+    counter-increment: scene; position: relative;
+    padding-left: 16pt; font-size: 8.5pt; line-height: 1.4; margin-bottom: 2pt;
+  }
+  .scene-list li::before {
+    content: counter(scene); position: absolute; left: 0;
+    font-size: 8pt; font-weight: 500; color: var(--brand);
+    width: 12pt; text-align: center;
+  }
+
+  /* ===== CALLOUT ===== */
+  .callout {
+    background: transparent; border-left: 1.5pt solid var(--brand);
+    padding: 3pt 0 3pt 10pt; margin: 6pt 0;
+    font-size: 8.5pt; line-height: 1.4; color: var(--olive);
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    margin-top: 8pt; padding-top: 4pt;
+    border-top: 0.3pt dotted var(--border);
+    font-size: 7.5pt; color: var(--stone);
+    display: flex; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <div class="title-block">
+    <div class="eyebrow">技术参考卡</div>
+    <h1>Notion CLI <code>ntn</code> 能力全览</h1>
+    <div class="subtitle">官方命令行工具 · 2026 Notion Developer Platform · v0.16.0</div>
+  </div>
+  <div class="meta">
+    Kinpoe.Ray<br>
+    2026.06.08<br>
+    公开
+  </div>
+</div>
+
+<!-- ===== LEAD ===== -->
+<p class="lead">
+  <code>ntn</code> 是 Notion 官方 CLI，一行 <code>npm i -g ntn@latest</code> 即装（需 Node 22+ / npm 10+）。
+  认证走 <code>ntn login</code> 浏览器 OAuth，或设 <code>NOTION_API_TOKEN</code> 环境变量。
+  所有计划可用，<span class="hl">Workers 需 Business / Enterprise</span>。
+</p>
+
+<!-- ===== 命令速查 ===== -->
+<div class="cmd-grid">
+
+  <div class="cmd-section">
+    <h3>认证 · <code>ntn login / logout / whoami</code></h3>
+    <ul class="cmd-list">
+      <li><code>ntn login</code> — OAuth 浏览器授权登录</li>
+      <li><code>ntn logout</code> — 登出当前 workspace</li>
+      <li><code>ntn whoami</code> — 查看认证用户和 workspace</li>
+      <li><code>ntn doctor</code> — 健康检查：版本、配置、token、API 连通性</li>
+    </ul>
+  </div>
+
+  <div class="cmd-section">
+    <h3>页面 · <code>ntn pages</code></h3>
+    <ul class="cmd-list">
+      <li><code>ntn pages get &lt;id&gt;</code> — 获取页面为 Markdown（含 frontmatter）</li>
+      <li><code>ntn pages create</code> — 创建页面（stdin / $EDITOR / --content）</li>
+      <li><code>ntn pages update &lt;id&gt;</code> — 更新页面内容</li>
+      <li><code>ntn pages trash &lt;id&gt;</code> — 删除页面</li>
+    </ul>
+  </div>
+
+  <div class="cmd-section">
+    <h3>数据库 · <code>ntn datasources</code></h3>
+    <ul class="cmd-list">
+      <li><code>ntn datasources query &lt;id&gt;</code> — 查询（filter / limit / 分页）</li>
+      <li><code>ntn datasources resolve &lt;db-id&gt;</code> — database ID → data source ID</li>
+    </ul>
+  </div>
+
+  <div class="cmd-section">
+    <h3>API 代理 · <code>ntn api</code></h3>
+    <ul class="cmd-list">
+      <li><code>ntn api &lt;path&gt;</code> — 调用任意 Notion REST API 端点</li>
+      <li><code>ntn api ls</code> — 列出所有支持的端点（40+）</li>
+      <li><code>ntn api &lt;path&gt; --docs</code> — 查看端点官方文档</li>
+      <li>语法：<code>path=value</code> 字符串 · <code>path:=json</code> 类型化 · <code>name==val</code> query</li>
+      <li>覆盖：blocks · comments · pages · databases · data_sources · file_uploads · views · users · search</li>
+    </ul>
+  </div>
+
+  <div class="cmd-section">
+    <h3>文件上传 · <code>ntn files</code></h3>
+    <ul class="cmd-list">
+      <li><code>ntn files create &lt; file.png</code> — 从 stdin 上传</li>
+      <li><code>ntn files create --external-url &lt;url&gt;</code> — 外部 URL 引用</li>
+      <li><code>ntn files get &lt;id&gt;</code> — 查看文件信息</li>
+      <li><code>ntn files list</code> — 列出所有上传</li>
+    </ul>
+  </div>
+
+  <div class="cmd-section">
+    <h3>Workers · <code>ntn workers</code></h3>
+    <ul class="cmd-list">
+      <li><code>ntn workers new</code> — 初始化项目 · <code>deploy</code> 部署 · <code>list</code> 列表</li>
+      <li><code>ntn workers exec</code> — 执行能力 · <code>env</code> 环境变量 · <code>oauth</code> 连接</li>
+      <li><code>ntn workers webhooks</code> — Webhook 管理 · <code>runs</code> 运行记录</li>
+      <li><code>ntn workers usage</code> — AI credit 用量 · <code>tui</code> 交互式终端 UI</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ===== BOTTOM ROW ===== -->
+<div class="bottom-row">
+
+  <div class="bottom-section">
+    <h3>与 MCP 对比</h3>
+    <table>
+      <thead>
+        <tr><th>能力</th><th style="text-align:center">Notion MCP</th><th style="text-align:center"><code>ntn</code> CLI</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>页面 CRUD</td><td class="check" style="text-align:center">✔</td><td class="check" style="text-align:center">✔</td></tr>
+        <tr><td>数据库查询</td><td class="check" style="text-align:center">✔</td><td class="check" style="text-align:center">✔</td></tr>
+        <tr><td>Markdown 读写</td><td class="cross" style="text-align:center">✘</td><td class="check" style="text-align:center">✔</td></tr>
+        <tr><td>文件上传</td><td class="cross" style="text-align:center">✘</td><td class="check" style="text-align:center">✔</td></tr>
+        <tr><td>Workers 部署</td><td class="cross" style="text-align:center">✘</td><td class="check" style="text-align:center">✔</td></tr>
+        <tr><td>全 API 代理</td><td style="text-align:center;color:var(--stone)">有限</td><td class="check" style="text-align:center">✔</td></tr>
+        <tr><td>bash 管道</td><td class="cross" style="text-align:center">✘</td><td class="check" style="text-align:center">✔</td></tr>
+        <tr><td>AI Agent 集成</td><td class="check" style="text-align:center">✔ MCP</td><td class="check" style="text-align:center">✔ skill</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bottom-section">
+    <h3>使用场景</h3>
+    <ol class="scene-list">
+      <li><strong>脚本自动化</strong> — bash / python 批量操作 Notion 数据</li>
+      <li><strong>AI Coding Agent</strong> — Claude Code 通过 CLI 直接读写 Notion</li>
+      <li><strong>CI/CD 集成</strong> — 管道中自动创建 / 更新 Notion 页面</li>
+      <li><strong>Workers 开发</strong> — 部署和调试 Notion serverless 函数</li>
+      <li><strong>内容管道</strong> — <code>pages get</code> → 处理 → <code>pages update</code></li>
+      <li><strong>快速查询</strong> — 终端直接搜页面、查数据库</li>
+    </ol>
+
+    <h3 style="margin-top:6pt">关键环境变量</h3>
+    <ul class="env-list">
+      <li><code>NOTION_API_TOKEN</code> — API token（覆盖 keychain）</li>
+      <li><code>NOTION_WORKSPACE_ID</code> — 指定 workspace</li>
+      <li><code>NOTION_KEYRING=0</code> — 文件认证替代系统 keychain</li>
+      <li><code>NOTION_WORKERS_CONFIG_FILE</code> — Workers 配置文件路径</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ===== CALLOUT ===== -->
+<div class="callout">
+  自更新：<code>ntn update</code> · Shell 补全：<code>ntn completions</code> · 官方文档：<code>developers.notion.com/cli</code>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <span>Notion CLI · ntn · Kami 排版</span>
+  <span>Kinpoe.Ray · 2026.06.08</span>
+</div>
+
+</body>
+</html>
